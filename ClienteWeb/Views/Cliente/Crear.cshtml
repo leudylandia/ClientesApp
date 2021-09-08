@@ -8,8 +8,9 @@
         <h2 class="text-primary">Customers List</h2>
     </div>
     <div class="col-4">
-        <button type="button" class="btn btn-info form-control" data-toggle="modal" data-target="#myModal">New Customer</button>
+        <button type="button" onclick="limpiar()" class="btn btn-info form-control" data-toggle="modal" data-target="#myModal">New Customer</button>
     </div>
+    <input type="hidden" id="clienteId" asp-for="Id" />
 </div>
 
 <div class="p-4 border rounded bg-light">
@@ -44,29 +45,29 @@
                         <div class="form-row" style="padding-top:14px;">
                             <div class="form-group col-md-6">
                                 <label>FirstName</label>
-                                <input asp-for="Nombres" class="form-control" placeholder="FirstName" />
+                                <input asp-for="Nombres" id="clienteNombres" class="form-control" placeholder="FirstName" />
                                 <span asp-validation-for="Nombres" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label>LastName</label>
-                                <input asp-for="Apellidos" class="form-control" placeholder="LastName" />
+                                <input asp-for="Apellidos" id="clienteApellidos" class="form-control" placeholder="LastName" />
                                 <span asp-validation-for="Apellidos" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Address</label>
-                            <input asp-for="Direccion" class="form-control" placeholder="Address" />
+                            <input asp-for="Direccion" id="clienteDireccion" class="form-control" placeholder="Address" />
                             <span asp-validation-for="Direccion" class="text-danger"></span>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Phone number</label>
-                                <input asp-for="Telefono" class="form-control" placeholder="Number" />
+                                <input asp-for="Telefono" id="clienteTelefono" class="form-control" placeholder="Number" />
                                 <span asp-validation-for="Telefono" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Status</label>
-                                <select asp-for="Estado" class="form-control">
+                                <select asp-for="Estado" id="clienteEstado" class="form-control">
                                     <option value="true">Active</option>
                                     <option value="false">Inactive</option>
                                 </select>

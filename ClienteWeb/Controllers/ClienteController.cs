@@ -23,9 +23,19 @@ namespace ClienteWeb.Controllers
             return View();
         }
 
-        public IActionResult Crear()
+        public async Task<IActionResult> Crear(int? id)
         {
-            return View();
+            var cliente = new Cliente();
+
+            if (id == null)
+            {
+                return View(cliente); //Mandamos nuestra variable inicializada para crear el cinete
+            }
+            else
+            {
+                cliente = await _db.Cliente.FindAsync(id);
+                return View(cliente);
+            }
         }
 
         [HttpPost]
@@ -34,10 +44,20 @@ namespace ClienteWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _db.AddAsync(cliente);
-                await _db.SaveChangesAsync();
+                if (cliente.Id == 0)
+                {
+                    await _db.AddAsync(cliente);
+                    await _db.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Crear));
+                    return RedirectToAction(nameof(Crear));
+                }
+                else
+                {
+                    _db.Update(cliente);
+                    await _db.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Crear), new { id = 0});
+                }
             }
 
             return View(cliente);
