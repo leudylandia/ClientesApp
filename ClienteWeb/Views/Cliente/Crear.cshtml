@@ -7,8 +7,13 @@
     <div class="col-6">
         <h2 class="text-primary">Customers List</h2>
     </div>
-    <div class="col-4">
-        <button type="button" onclick="limpiar()" class="btn btn-info form-control" data-toggle="modal" data-target="#myModal">New Customer</button>
+    <div class="col-12">
+        <div class="col-3">
+            <button type="button" onclick="limpiar()" class="btn btn-info form-control" data-toggle="modal" data-target="#myModal">New Customer</button>
+        </div>
+        <div class="col-3">
+            <button type="button" onclick="limpiar()" class="btn btn-primary form-control" data-toggle="modal" data-target="#myModalPractice">New Customer(practice)</button>
+        </div>
     </div>
     <input type="hidden" id="clienteId" asp-for="Id" />
 </div>
@@ -22,11 +27,11 @@
                 <th>Address</th>
                 <th>Phone</th>
                 <th>Status</th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
     </table>
-</div> 
+</div>
 
 @* MODAL *@
 <div class="modal fade" id="myModal">
@@ -85,8 +90,66 @@
     </div>
 </div>
 
-@section Scripts{ 
+@* MODAL PRACTICE *@
+<div class="modal fade" id="myModalPractice">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <form id="frmFormulario">
+                <div class="modal-header">
+                    <h2 class="modal-title text-primary text-center">Complete field</h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div style="padding-left:15%; padding-right:15%;padding-bottom:30px">
+                        <div class="row p-3 border-0">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                        <div class="form-row" style="padding-top:14px;">
+                            <div class="form-group col-md-6">
+                                <label>FirstName</label>
+                                <input asp-for="Nombres" id="clienteNombres" class="form-control" placeholder="FirstName" />
+                                <span asp-validation-for="Nombres" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>LastName</label>
+                                <input asp-for="Apellidos" id="clienteApellidos" class="form-control" placeholder="LastName" />
+                                <span asp-validation-for="Apellidos" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input asp-for="Direccion" id="clienteDireccion" class="form-control" placeholder="Address" />
+                            <span asp-validation-for="Direccion" class="text-danger"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Phone number</label>
+                                <input asp-for="Telefono" id="clienteTelefono" class="form-control" placeholder="Number" />
+                                <span asp-validation-for="Telefono" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Status</label>
+                                <select asp-for="Estado" id="clienteEstado" class="form-control">
+                                    <option value="true">Active</option>
+                                    <option value="false">Inactive</option>
+                                </select>
+                                <span asp-validation-for="Estado" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/cliente.js"></script>
+    <script src="~/js/Practica.js"></script>
 }
 

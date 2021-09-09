@@ -69,5 +69,49 @@ namespace ClienteWeb.Controllers
 
             return Json(new { data = todos });
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cliente = await _db.Cliente.FindAsync(id);
+
+            if (cliente == null)
+            {
+                return Json(new { success = false, message = "An error occurred while deleting" });
+            }
+
+            _db.Cliente.Remove(cliente);
+            await _db.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Done!" });
+        }
+
+
+
+        //**********PRACTICA*************
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Crear2(Cliente cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                if (cliente.Id == 0)
+                {
+                    await _db.AddAsync(cliente);
+                    await _db.SaveChangesAsync();
+
+                    return Json(new { success = true, message = "Customer Save!" });
+                }
+                else
+                {
+                    _db.Update(cliente);
+                    await _db.SaveChangesAsync();
+
+                    return Json(new { success = true, message = "Customer Update!" });
+                }
+            }
+
+            return Json(new { success = false, message = "Something was wrong!!" });
+        }
     }
 }

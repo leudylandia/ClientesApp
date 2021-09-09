@@ -4,6 +4,7 @@ $(document).ready(function () {
     loadDataTables();
     var id = document.getElementById("clienteId");
 
+
     if (id.value > 0) {
         $('#myModal').modal("show");
     }
@@ -48,12 +49,74 @@ function loadDataTables() {
             {
                 "data": "id",
                 "render": function (data) {
-                    return `<div>
+                    return `<div style="width: 167px;">
                               <a href="/Cliente/Crear/${data}" class="btn btn-success text-white" style="cursor:pointer;">Update</a>
+                              <a onclick=Delete("/Cliente/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer;">Delete</a>
                             </div>`
-                },
-                "width": "10%"
+                }
             }
         ]
     });
 }
+
+function Delete(url) {
+    swal({
+        title: "Are you sure you want to delete this customer?",
+        text: "Customer will not be avaible",
+        icon: "warning",
+        buttons: true
+    }).then((borrar) => {
+        if (borrar) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        swal("Delete!", data.message, "success");
+                        datatable.ajax.reload();
+                    }
+                    else {
+                        swal("Good job!", data.message, "error");
+                        $('#myModalPractice').modal("show");
+                    }
+                }
+            });
+        }
+    });
+}
+
+
+
+
+
+//************PRACTICA***************
+$(document).ready(function () {
+    $('#frmFormulario').submit(function (e) {
+        
+        e.preventDefault();
+
+        var datastring = $("#frmFormulario").serialize();
+
+        if ($("#frmFormulario").valid()) {
+            $.ajax({
+                type: "POST",
+                url: "/Cliente/Crear2",
+                data: datastring,
+                success: function (data) {
+                    if (data.success) {
+                        swal("Save", data.message, "success");
+                        $("#frmFormulario").trigger("reset"); //Limpiar formulario
+                        datatable.ajax.reload();
+                    }
+                    else {
+                        swal("Oop!", data.message, "error");
+
+                    }
+                }
+            });
+
+        } else {
+            swal("Info!", "Complete the form", "info");
+        }
+    });
+});
