@@ -90,9 +90,10 @@ namespace ClienteWeb.Controllers
 
         //**********PRACTICA*************
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear2(Cliente cliente)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Crear2(Cliente cliente/*string msg*/)
         {
+            //Cliente cliente = new Cliente();
             if (ModelState.IsValid)
             {
                 if (cliente.Id == 0)

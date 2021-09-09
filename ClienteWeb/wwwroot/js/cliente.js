@@ -97,16 +97,24 @@ $(document).ready(function () {
 
         var datastring = $("#frmFormulario").serialize();
 
+        var data2 = $("#frmFormulario").serializeArray();
+
+        var myjson = {};
+        $.each(data2, function(i, v) {
+            myjson[v.name] = v.value;
+        });
+
         if ($("#frmFormulario").valid()) {
             $.ajax({
                 type: "POST",
-                url: "/Cliente/Crear2",
-                data: datastring,
+                url: "/cliente/crear2",
+                data: { cliente: myjson},
                 success: function (data) {
                     if (data.success) {
                         swal("Save", data.message, "success");
                         $("#frmFormulario").trigger("reset"); //Limpiar formulario
-                        datatable.ajax.reload();
+                        datatable.ajax.reload(); //Cargar el datatable nuevamente para mostrar el registro guardado
+                        $('#myModalPractice').modal("hide");
                     }
                     else {
                         swal("Oop!", data.message, "error");
